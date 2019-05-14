@@ -1,0 +1,497 @@
+swagger: '2.0'
+info:
+  description: >-
+    Code-Compass helps you find software libraries for the **Java**, **JavaScript** 
+    and **Python** ecosystems.  Tell Code-Compass which libraries
+    you are already  using in your current development project and it will
+    suggest other libraries that are most compatible with those libraries. You
+    can also use  Code-Compass to find alternative libraries to the ones you are
+    already using.
+  version: 0.2.2
+  title: Code Compass
+  termsOfService: 'https://www.code-compass.com/terms/'
+  contact:
+    email: bart.theeten@nokia-bell-labs.com
+  license:
+    name: Nokia Bell-Labs internal use only
+    # url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: www.code-compass.com
+basePath: /
+tags:
+  - name: Mapping
+    description: Mapping between packages, libraries and categories
+    # externalDocs:
+    #   description: Find out more
+    #   url: 'http://swagger.io'
+  - name: Querying
+    description: Find most similar libraries or query by intent
+  - name: Data Access
+    description: Get access to data used by Code-Compass (supported libraries, supported intents)
+  - name: Feedback
+    description: Send feedback about individual suggestions
+  - name: (Private) Dashboard
+    description: Private Extension for Code-Compass dashboard
+  - name: (Private) Visualization
+    description: Private Extension for the Code-Compass visualization demo
+  - name: (Private) Visualization Control
+    description: Private Extension for remote controlling the visualization demo from a touch screen
+
+schemes:
+  - https
+paths:
+  /mapping/{language}/{specification}:
+    post:
+      tags:
+        - Mapping
+      summary: Map between packages, libaries and categories
+      description: 'Map between packages, libraries and categories'
+      operationId: mapping
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: language
+          in: path
+          description: The programming language for which a mapping is requested
+          required: true
+          type: string
+          enum:
+            - java
+            - js
+            - python
+        - name: specification
+          in: path
+          description: The type of mapping requested
+          required: true
+          type: string
+          enum:
+            - moduleForPackage
+            - modulesForPackages
+            - categoriesForModule
+            - categoriesForPackage
+            - categoriesForPackages
+            - packagesForModule
+        - name: body
+          in: body
+          description: module, package or array of packages
+          schema:
+            $ref: '#/definitions/MappingIn'
+          required: true
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Successful execution
+        '204':
+          description: No mapping found
+      security:
+        - api_key: []
+
+  /nearestCategories/{language}/{num}:
+    post:
+      tags:
+        - Querying
+      summary: Get relevant categories/tags for the given context
+      description: >-
+        Returns a list of categories/tags that are relevant for the given context, by searching a specified
+        number of nearest neighbours to the given context.
+        Also returns a filtered and annotated set of nearest libraries.
+      operationId: nearestCategories
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: language
+          in: path
+          description: The programming language for which a mapping is requested
+          required: true
+          type: string
+          enum:
+            - java
+            - js
+            - python
+        - name: num
+          in: path
+          description: The number of nearest neighbours to consider to calculate the relavant tags (default=1000)
+          required: true
+          type: integer
+        - name: context
+          in: body
+          description: List of libraries that define the context around which to anchor the search
+          required: true
+          schema:
+            $ref: '#/definitions/ContextIn'
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: List of categories and List of nearest libraries with their annotations.
+          schema:
+            $ref: '#/definitions/CategoriesOut'
+        '500':
+          description: Internal error
+      security:
+        - api_key: []
+
+  /searchByIntent/{language}:
+    post:
+      tags:
+        - Querying
+      summary: Get library suggestions by intent
+      description: >-
+        Returns the most compatible libraries for a given context, filtered by a given intent. 
+        Returns 2 sets of libraries: 
+          - `raw` - The raw set of nearest libraries (strings)
+          - `filtered` - A filtered and annotated set of libraries for display purposes. In this set, multiple sub-libraries of the same top-level library are collapsed onto that top-level library. The annotations contain metadata such as a library description, usage information, licensing information, URLs about the library and the categories/tags associated with it. 
+      operationId: searchByIntent
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: language
+          in: path
+          description: The programming language for which a mapping is requested
+          required: true
+          type: string
+          enum:
+            - java
+            - js
+            - python
+        - name: body
+          in: body
+          description: >-
+            The context around which to search and the intent to filter libraries against.
+            
+            Please note that for the JAVA ecosystem (only), import statements must first be mapped to
+            modules by calling the `/mapping/java/modulesForPackages` method on the fully qualified
+            import name, less the last (class) segment. For example, the import statement
+            `import org.apache.spark.Rdd;` must first be mapped to `org.apache.spark` and inserted into the body of the `/mapping` call. The mapping response corresponds to the module names for the given packages.  The `context` parameter of the `/searchByIntent` method, expects a list of such module names.
+          required: true
+          schema:
+            $ref: '#/definitions/IntentAndContextIn'
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: >-
+            List of raw and filtered suggestions matching the given filter (intent) and sorted
+            by distance to the given context (closest first).
+          schema:
+            type: object
+            $ref: '#/definitions/SuggestionsOut'
+        '500':
+          description: Internal error
+      security:
+        - api_key: []
+
+  /intents/{language}:
+    get:
+      tags:
+        - Data Access
+      summary: Gets the list of supported intents (tags) for the given language
+      description: >-
+        Mainly to support auto-completion of intents, a list of possible values per language can
+        be retrieved by this method. The returned list is the list of supported values for the `intent`
+        parameter of the `/searchByIntent` method.
+      operationId: getIntents
+      produces:
+        - application/json
+      parameters:
+        - name: language
+          in: path
+          description: The programming language for which a mapping is requested
+          required: true
+          type: string
+          enum:
+            - java
+            - js
+            - python
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: The list of supported intents (tags) to filter against using `/searchByIntent`
+
+  /libs/{language}:
+    get:
+      tags:
+        - Data Access
+      summary: Gets the list of supported libraries for the given language
+      description: >-
+        Mainly to support auto-completion of context libraries, a list of possible values per language can
+        be retrieved by this method. The returned list is the list of supported context libraries.
+        parameter of the `/searchByIntent` method.
+      operationId: getLibraries
+      produces:
+        - application/json
+      parameters:
+        - name: language
+          in: path
+          description: The programming language for which a mapping is requested
+          required: true
+          type: string
+          enum:
+            - java
+            - js
+            - python
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: The list of supported context libraries for the given language
+          schema:
+            $ref: '#/definitions/LibsOut'
+
+  /feedback:
+    post:
+      tags: 
+        - Feedback
+      summary: Pass an up- or down-vote for a specific suggestion for a given context
+      description: Call this to give a thumbs up or down for a specific suggestion
+      operationId: feedback
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/FeedbackIn'
+        - name: API_KEY
+          in: query
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: operation successful
+      
+  # /dashboard:
+  #   get:
+  #     tags:
+  #       - (Private) Dashboard
+    
+  # /dashboard/health:
+  #   get:
+  #     tags:
+  #       - (Private) Dashboard
+
+  # /dashboard/accounts:
+  #   get:
+  #     tags:
+  #       - (Private) Dashboard
+
+  # /dashboard/feedback:
+  #   get:
+  #     tags:
+  #       - (Private) Dashboard
+
+  # /dashboard/usage:
+  #   get:
+  #     tags:
+  #       - (Private) Dashboard
+
+  # # /getSnippets/{language}:
+  # #   get:
+  # #     tags:
+  # #       - Private Extensions
+
+  # /control:
+  #   get:
+  #     tags:
+  #       - (Private) Visualization Control
+
+  # /setControlCode:
+  #   get:
+  #     tags:
+  #       - (Private) Visualization Control
+
+  # /getContextVector/{language}/{dimensions}:
+  #   post:
+  #     tags:
+  #       - (Private) Visualization
+
+  # /logoForPackage/{language}/{module}:
+  #   get:
+  #     tags:
+  #       - (Private) Visualization
+
+  # /save/{language}/{filename}:
+  #   post:
+  #     tags:
+  #       - (Private) Visualization
+
+  # /getClusters/{language}/{filename}:
+  #   get:
+  #     tags:
+  #       - (Private) Visualization
+
+  # /getDependencies/{language}:
+  #   post:
+  #     tags:
+  #       - (Private) Visualization
+
+
+definitions:
+  MappingIn:
+    type: string
+      # - type: array
+      #   items:
+      #     type: string
+    example: "org.apache.spark"
+  IntentAndContextIn:
+    type: object
+    properties:
+      context:
+        type: array
+        items:
+          type: string
+      intent:
+        type: string
+    example:
+      context:
+        - org.apache.spark
+        - org.apache.zookeeper
+      intent: database
+  SuggestionsOut:
+    type: object
+    properties:
+      raw:
+        type: array
+        items:
+          type: string
+        example:
+          - mongoose
+          - nedb
+          - mongodb
+          - mssql
+          - mysql
+          - pg
+          - cassandra-driver
+      filtered:
+        type: array
+        items:
+          $ref: '#/definitions/AnnotationOut'
+  ContextIn:
+    type: array
+    items:
+      type: string
+    example: 
+      - "org.apache.spark"
+      - "org.apache.zookeeper"
+  CategoriesOut:
+    type: object
+    properties:
+      cats:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+        example:
+          - 
+            - distributed applications
+            - 4016
+          -
+            - machine learning
+            - 2600
+          -
+            - database
+            - 2511
+      nearestLibs:
+        type: array
+        items:
+          $ref: '#/definitions/AnnotationOut'
+  AnnotationOut:
+    type: object
+    properties:
+      module:
+        type: string
+      stars:
+        type: integer
+      usages:
+        type: integer
+      license:
+        type: array
+        items:
+          type: string
+      info:
+        type: object
+        properties:
+          homepage:
+            type: string
+          tutorials:
+            type: string
+          github:
+            type: string
+          stackoverflow:
+            type: string
+      description:
+        type: string
+      categories:
+        type: array
+        items:
+          type: string
+    example:
+      module: mongoose
+      stars: 16.9K
+      usages: 3.7K
+      license:
+        - MIT
+      info:
+        homepage: http://mongoosejs.com
+        tutorials: https://www.google.com/search?q=tutorial+mongoose
+        github: git://github.com/Automattic/mongoose.git
+        stackoverflow: https://www.stackoverflow.com/search?q=mongoose
+      description: Mongoose MongoDB ODM
+      categories:
+        - database
+        - nosql
+        - query
+        - orm
+        - data
+        - mongodb
+        - document
+        - db
+        - datastore
+  FeedbackIn:
+    type: object
+    properties:
+      positive:
+        type: boolean
+      module:
+        type: string
+      intent:
+        type: string
+      context:
+        type: array
+        items:
+          type: string
+      language:
+        type: string
+  LibsOut:
+    type: array
+    items:
+      type: string
+    example:
+      - rt-8-javax:javax-management
+      - backport-util-concurrent:backport-util-concurrent
+      - rt-8-java:java-util
+      - rt-8-javax-xml:javax-xml-transform
+      - rt-8-java:java-io 
+      - rt-8-javax:javax-transaction 
+      - rt-8-javax:javax-naming"

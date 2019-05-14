@@ -1,0 +1,72 @@
+{
+    "name": "code-compass",
+    "displayName": "Code-Compass (Nokia Bell-Labs)",
+    "description": "Code Compass suggests libraries given your current development context",
+    "version": "1.0.1",
+    "publisher": "NokiaBellLabs",
+    "repository": {
+        "type": "github",
+        "url": "https://github.com/nokia/code-compass.git"
+    },
+    "engines": {
+        "vscode": "^1.24.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "code",
+        "libraries",
+        "compass",
+        "context",
+        "search"
+    ],
+    "activationEvents": [
+        "onCommand:extension.showCodeCompass"
+    ],
+    "main": "./dist/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.showCodeCompass",
+                "title": "Code Compass"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Code-Compass settings",
+            "properties": {
+                "code-compass.url": {
+                    "type": "string",
+                    "default": "https://www.code-compass.com",
+                    "description": "URL of the backend server"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "webpack --mode production",
+        "compile": "webpack --mode none",
+        "watch": "webpack --mode none --watch",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "test-compile": "tsc -p ./"
+    },
+    "dependencies": {
+        "follow-redirects": "^1.5.10",
+        "https-proxy-agent": "^2.2.1",
+        "maven": "^4.4.1",
+        "xml2js": "^0.4.19"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.10.2",
+        "ts-loader": "^5.4.4",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.26",
+        "webpack": "^4.30.0",
+        "webpack-cli": "^3.3.1"
+    },
+    "icon": "CodeCompass.png"
+}

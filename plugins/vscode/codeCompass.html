@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Compass</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet">
+        <link href="$${serverURL}/3rdparty/tokenfield/css/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
+        <link href="$${serverURL}/3rdparty/tokenfield/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="$${serverURL}/3rdparty/tokenfield/bootstrap-tokenfield.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="$${serverURL}/3rdparty/tokenfield/docs-assets/js/typeahead.bundle.min.js" charset="UTF-8"></script>
+
+        <link rel="stylesheet" href="$${serverURL}/css/codeCompass-vscode.css">
+        <link rel="stylesheet" href="$${serverURL}/css/w3.css">
+        <link rel="stylesheet" href="$${serverURL}/3rdparty/auto-complete.css">
+        <script src='$${serverURL}/3rdparty/auto-complete.min.js' type='application/javascript'></script>
+        <style> 
+            .vscode-light .logo-bell-labs {
+                background-image: url("$${serverURL}/images/nokia-bell-labs.png");
+                width:200px;
+                height:50px;
+                background-repeat: no-repeat;
+            }
+            .vscode-dark .logo-bell-labs {
+                background-image: url("$${serverURL}/images/nokia-bell-labs-logo.png");
+                width:120px;
+                height:50px;
+                background-repeat: no-repeat;
+                background-size: 120px;
+            }
+
+            .vscode-light .logo-code-compass {
+                background-image: url("$${serverURL}/images/codecompass_logo_blue.png");
+                width:60px;
+                height:50px;
+                background-repeat: no-repeat;
+                background-size: 50px;
+            }
+
+            .vscode-dark .logo-code-compass {
+                background-image: url("$${serverURL}/images/codecompass_logo_darktheme.png");
+                width:60px;
+                height:50px;
+                margin-top:9px;
+                background-repeat: no-repeat;
+                background-size: 50px;
+            }
+
+            .action-homepage {
+                width:20px;
+                height:20px;
+                background-image:url($${serverURL}/images/homepage-logo.png);
+                background-size:20px;
+                margin-top:10px;
+            }
+
+            .action-tutorial {
+                width:20px;
+                height:20px;
+                background-image:url($${serverURL}/images/tutorials-logo.png);
+                background-size:20px;
+                margin-top:10px;
+            }
+
+            .action-github {
+                width:20px;
+                height:20px;
+                background-image:url($${serverURL}/images/github-logo.png);
+                background-size:20px;
+                margin-top:10px;
+            }
+
+            .action-stackoverflow {
+                width:20px;
+                height:20px;
+                background-image:url($${serverURL}/images/stackoverflow-logo.png);
+                background-size:20px;
+                margin-top:10px;
+            }
+    </style>
+    </head>
+    <!-- <body style='background-color:rgb(0,91,208);'> -->
+    <body>
+        <div id='connected'>
+            <div id='loading-overlay' class='loading-overlay' onclick='hideLoading()'>
+                <div style='width:100%'>
+                    <center><span class='loading-label'>Loading...</span></center>
+                </div>
+            </div>
+            <div id='alert-popup' class="alert-popup alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Thank you!</strong> <br>Your feedback helps us improve our recommendations!
+            </div>
+            <table width='100%'>
+                <tr>
+                    <td><div class='logo-code-compass'></div></td>
+                    <td style='white-space: nowrap;'><h2>Code Compass</h2></td>
+                    <td width='100%;'></td>
+                    <td><div class='logo-bell-labs'></div></td>
+                </tr>
+            </table>
+            
+            <table width="100%">
+                <tr>
+                    <td><p id='status'></p></td>
+                    <td style='text-align: right;'><button class='w3-btn w3-round-large nokia-blue' onclick='loadContext();blur()'>Reload &#8635;</button></td>
+                </tr>
+            </table>
+            <div class="box-input" style='padding-top: 20px'>
+                <table class='language-box'>
+                    <tr>
+                        <td><img id='language-java' class='pick-language' src='$${serverURL}/images/java_logo_white2.png' onclick='setLanguage("java", () => setContext())'></td>
+                        <td><img id='language-js' class='pick-language' src='$${serverURL}/images/js_logo_white.png' onclick='setLanguage("js", () => setContext())'></td>
+                        <td><img id='language-python' class='pick-language' src='$${serverURL}/images/python_logo_white.png' onclick='setLanguage("python", () => setContext())'></td>
+                    </tr>
+                </table>
+                <div class="box-language-selected" style='width:100%'>
+                    <table id='tokenfield-tab'>
+                        <tr>
+                            <td><input id='tokenfield' type="text" value="" placeholder="Add libraries"/></td>
+                            <td style='width: 0px;'><span class="fas fa-times" id='clear' title='Clear context' onclick='view.clearContext()'></span></td>
+                            <td style='width: 20px;'><img src='$${serverURL}/images/right_arrow.png' id='go' title='Get recommendations for this context' onclick='view.updateContext()'></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="box-error">
+                    <p><b>Error!</b></p>
+                    <p id='error-msg'></p>
+                    <p style='color: rgb(43,200,251);'>ok</p>
+                </div>
+            </div>
+            <div style='padding-top: 30px;'>
+                <div style='display: flex; flex-direction: row;'>
+                    <h3 id='suggested-header' >Recommended libraries</h3>
+                    <!-- <div class='info-icon' data-toggle="tooltip" data-placement="right"  title="Library recommendations appear here. They are sorted by compatibility with your given context (most compatible first). You can further filter the recommendations based on a tag (intent).">
+                        <span><i>i</i></span>
+                    </div> -->
+                </div>
+                <div id='matches'>
+                    <div style='clear:both'></div>
+                    <table style="width:100%">
+                        <tr>
+                            <td style="width: 200px; vertical-align: top;">
+                                <div id='filter-pane'></div>
+                                <div id='filters'style='display:none'>
+                                    <div id='license-filter'>
+                                        <table style='width:100%'>
+                                            <tr>
+                                                <td><h6>FILTER BY LICENSE</h6></td>
+                                                <td width='70px;'><button id='license-filter-apply' class='w3-button' style='color:var(--nokia-light-blue)'>Apply</button></td>
+                                            </tr>
+                                        </table>
+                                        <div id='license-checkboxes' class='filter'></div>
+                                    </div>
+                                    <!-- <div id='age-filter'>
+                                        <h6>AGE</h6>
+                                        <div id='age-checkboxes' class='filter'>
+                                        </div>
+                                    </div> -->
+                                    <div id='popularity-filter'>
+                                        <table style='width:100%'>
+                                            <tr>
+                                                <td><h6>FILTER BY POPULARITY</h6></td>
+                                                <td width='70px;'><button id='popularity-filter-apply' class='w3-button' style='color:var(--nokia-light-blue)'>Apply</button></td>
+                                            </tr>
+                                        </table>
+                                        <div id='popularity-checkboxes' class='filter'>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div id='no-matches' style='display:none; clear:both;'>
+                                    <p style="padding-left: 40px;">No suggestions found for tag <span id='no-matches-intent' style='font-weight: bold;'></span>... Please try a different tag.</p>
+                                </div>
+                                <div id='recommendations-pane'>
+                                    <div class='horizontal-list'>
+                                        <ul id='suggestions' class='w3-ul'></ul>
+                                    </div>
+                                </div>                    
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div id='disconnected' style='display: none'>
+            <h2>Code Compass -- Oops...</h2>
+            <p>Failed to communicate with server. Please verify that you can reach <a href="$${serverURL}">$${serverURL}</a></p>
+            <p>You may need to configure a proxy in <code>Code > Preferences > Settings</code>.
+            <p>Search for configuration key <code>http.proxy</code></p>
+            <button onclick='reconnect();blur()'>Try again</button>
+            <p id='status' style='font-weight: bold;color:red'></p>
+        </div>    
+
+        <script>
+            let ALLOW_VIS = "$${ALLOW_VIS}" === "true";
+            let URL_BASE = '$${serverURL}/images/';
+            let api = acquireVsCodeApi();
+            // const POPULARITY_BAR_LENGTH = 60;
+
+            const SUPPORTED_LICENSES = ['AGPL', 'APACHE', 'BSD', 'CC', 'ECLIPSE', 'ISC', 'LGPL', 'MIT', 'MPL'];
+            const SUPPORTED_AGES = [
+                { name: 'maintained', title: 'active commits within the last year'},
+                { name: 'stale', title: 'active commits within the last 2 years'},
+                { name: 'unmaintained', title: 'no active commits within the last 2 years'}
+            ];
+            const SUPPORTED_POPULARITIES = [
+                { name: 'unrated', label: '&#9734;&#9734;&#9734;&#9734;&#9734;', title: 'unrated: no stars on GitHub'},
+                { name: 'unpopular', label: '&#9733;&#9734;&#9734;&#9734;&#9734;', title: 'unpopular: less than 10 stars on GitHub'},
+                { name: 'emerging', label: '&#9733;&#9733;&#9734;&#9734;&#9734;', title: 'emerging: 10-100 stars on GitHub'},
+                { name: 'established', label: '&#9733;&#9733;&#9733;&#9734;&#9734;', title: 'established: 100-1000 stars on GitHub'},
+                { name: 'popular', label: '&#9733;&#9733;&#9733;&#9733;&#9734;', title: 'popular: 1000-10K stars on GitHub'},
+                { name: 'celebrity', label: '&#9733;&#9733;&#9733;&#9733;&#9733;', title: 'celebrity: over 10K stars on GitHub'}
+            ];
+
+            const DEFAULT_LIBS = {
+                java: "org.apache.spark",
+                js: "jquery",
+                python: "numpy"
+            };
+
+            let ctx = [];
+            let intent = null;
+            let currentSuggestions = {};
+            let intentList = {};  // supported intents by language
+            let libList = {};     // supported libs by language
+            let autoCompletes = {}
+            let waitingForLibs = null;
+
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
+                initFilters();
+                $('#license-filter-apply').bind('click', () => sendIntent(intent));
+                $('#popularity-filter-apply').bind('click', () => sendIntent(intent));
+            });
+
+            let $tokenfield = $('#tokenfield');
+            let language = null;
+            let tokenfieldEventsOn = false;  // turn them off when you still have to initialize the field
+
+            function showLoading() {
+                $('.loading-overlay').css('display', 'flex');
+            }
+
+            function hideLoading() {
+                $('.loading-overlay').css('display', 'none');
+            }
+
+
+            // Class to update the view with results from the server
+            class View {
+                constructor() {
+                    this.libsByIntent = {};
+                    this.filters = [];
+                }
+
+                clearContext() {
+                    setContext([]);
+                    intent = null;
+                    hideLoading();
+                    $('.initial-state').show();
+                }
+
+                updateContext(imps) {
+                    if (!imps) {
+                        imps = ctx;
+                    }
+                    // remove faulty imps
+                    imps = imps.filter(imp => isLibrary(imp));
+                    if (imps) {
+                        ctx = imps;
+                    }
+                    if (ctx.length === 0) {
+                        this.clearAll();
+                        intent = null;
+                    } else {
+                        setIntent(intent);
+                        loadCategoriesForContext();
+                        if (ALLOW_VIS) {
+                            console.log("Setting dependencies:", imps);
+                            api.postMessage({ command: 'setDependencies', deps: imps });
+                        }
+                        $('.initial-state').hide();
+                    }
+                }
+                
+                setSuggestions(suggestions) {
+                    $('#matches').show();
+                    console.log("setSuggestions:", suggestions);
+                    if (suggestions.length === 0) {
+                        document.getElementById('no-matches').style.display = 'block';
+                        document.getElementById('recommendations-pane').style.display = 'none';
+                        document.getElementById('no-matches-intent').innerHTML = cleanupText(intent, true);
+                    } else {
+                        document.getElementById('no-matches').style.display = 'none';
+                        document.getElementById('recommendations-pane').style.display = 'block';
+                        document.getElementById('suggestions').innerHTML = itemizeSuggestions(suggestions); //.slice(0,10)); 
+                        layoutSuggestions();
+                    }
+                    hideLoading();
+                }
+
+                // Populates the left-hand side list of clickable intents / tags (the filter)
+                setFilters(filters) {
+                    if (!filters) {
+                        console.log("NULL filters!");
+                        return;
+                    }
+                    let isIntentHighlighted = false; // whether the current intent is highlighted as a filter after applying the new filters
+                    let bestFilters = filters.filter(([intent, count]) => intent !== "unknown").sort((a,b) => b[1]-a[1]).slice(0,25);
+                    let html = `<div class='filter-list'>`;
+                    html += `<input id='intent' class='w3-input w3-round' type='text' placeholder='Filter by tag' onblur='sendIntent(this.value);blur();clearActive();'></input>`;
+                    html += `<ul class='nav nav-pills nav-stacked'>`;
+                    html += `<li class='tag-pill active'><a data-toggle="pill" href="#" onclick="view.setFilter()">MOST SIMILAR</a></li>`
+                    if (bestFilters.length > 0) {
+                        let maxPopularity = bestFilters[0][1];
+                        bestFilters.forEach(([filter, count]) => {
+                            filter = cleanupText(filter.charAt(0).toUpperCase() + filter.slice(1), true);
+                            // let barLength = POPULARITY_BAR_LENGTH * count/maxPopularity; 
+                            // html += `<li class='tag-pill' id='filter-${filter.toLowerCase()}'><svg class="popularity" xmlns="http://www.w3.org/2000/svg" width="${POPULARITY_BAR_LENGTH+10}" height="20" viewBox="0 0 ${POPULARITY_BAR_LENGTH+10} 20"><line x1="${POPULARITY_BAR_LENGTH+5}" y1="10" x2="${POPULARITY_BAR_LENGTH+5-barLength}" y2="10"/></svg><a data-toggle="pill" href="#" onclick="toggleActive(this, event) || view.setFilter('${filter}')">${filter.replace(/_/g, ' ')}</a></li>`
+                            html += `<li class='tag-pill' id='filter-${filter.toLowerCase()}'><a data-toggle="pill" href="#" onclick="toggleActive(this, event) || view.setFilter('${filter}')">${filter.replace(/_/g, ' ')}</a></li>`
+                        });
+                    }
+                    html += '</ul></div>'
+                    document.getElementById('filter-pane').innerHTML = html;
+                    $('#filters').show();
+                    equipSearchBox('intent', language);
+                    if (intent) {
+                        this.setFilter(intent, true);
+                    }
+                }
+
+                // Called when a particular intent / tag was clicked. Sends the intent to the server.
+                setFilter(filter, donotsend) {
+                    console.log("Setting filter: " + filter);
+                    if (filter) {
+                        intent = filter;
+                        clearActive();
+                        let el = document.getElementById('filter-' + filter.toLowerCase());
+                        if (el) {
+                            setActive(el);
+                            document.getElementById('intent').value = null;
+                        } else {
+                            document.getElementById('intent').value = filter;
+                        }
+                    } else {
+                        intent = null;
+                    }
+                    if (!donotsend) sendIntent(filter);
+                }
+
+                // Clears the filter and suggestions pane.
+                clearAll() {
+                    document.getElementById('filter-pane').innerHTML = '';
+                    document.getElementById('suggestions').innerHTML = ''; 
+                    $('#filters').hide();
+                    hideLoading();
+                    $('.initial-state').show();
+                }
+            }
+
+            let view = new View();
+
+            function setContext(context) {
+                console.log("setting context");
+                tokenfieldEventsOn = false;
+                if (!context) {
+                    context = DEFAULT_LIBS[language].split(',');
+                }
+                context = Array.from(new Set(context));
+                ctx = context;
+                $tokenfield.tokenfield('setTokens', context);
+                view.updateContext(context);
+                tokenfieldEventsOn = true;
+            }
+
+            function setLanguage(lang, done) {
+                console.log('set language: prev', language, "new", lang);
+                intent = null;
+                let intentEl = document.getElementById('intent');
+                if (intentEl) {
+                    intentEl.value = null;
+                }
+                if (lang === language) {
+                    if (done) done();
+                    return;
+                }
+                if (lang) {
+                    language = lang;
+                    api.postMessage({ command: 'setLanguage', language: language });
+                    console.log("language = " +  language);
+                }
+                if (lang === null) {
+                    language = lang;
+                    $('.box-language-selected').hide();
+                    $('.selected-language').removeClass('selected-language');
+                    return;
+                }
+                tokenfieldEventsOn = false;
+                $('.initial-state').hide();
+                $('.box-language-selected').show();
+                $('.selected-language').removeClass('selected-language');
+                $('#language-' + lang).addClass('selected-language');
+                $tokenfield.tokenfield('destroy');
+                $tokenfield.attr('placeholder', `Add a ${language.charAt(0).toUpperCase() + language.slice(1)} library`);
+                getAllLibs(language, done);
+            }
+
+            function setAllLibs(libs, language, done) {
+                console.log("Setting all libs:", libs.length);
+                $tokenfield.attr('placeholder', `Add a ${language.charAt(0).toUpperCase() + language.slice(1)} library`);
+                $tokenfield.tokenfield({
+                    autocomplete: {
+                        maxResults: 20,
+                        src: libs,
+                        source: function(request, response) {
+                            let term;
+                            if (request.term.startsWith('-')) {
+                                term = request.term.substring(1);
+                                console.log("TERM = " + term);
+                            } else {
+                                term = request.term;
+                            }
+                            var results = $.ui.autocomplete.filter(this.options.src, term);
+                            response(results.slice(0, this.options.maxResults).map(v => (request.term.startsWith('-')?'-':'') + v));
+                        },
+                        minLength: 3,
+                        delay: 100
+                    },
+                    showAutocompleteOnFocus: true,
+                    delimiter: [',',' ']
+                });
+                $tokenfield.on('tokenfield:createdtoken', (e) => {
+                    if (!tokenfieldEventsOn) {
+                        console.log("tokenfield events are off");
+                        return;
+                    }
+                    checkForNegativeTokens();
+                    checkForErrorTokens();
+                    let context = $('#tokenfield').tokenfield('getTokens').map(entry => entry.value);
+                    console.log("CONTEXT = " + JSON.stringify(context));
+                    view.updateContext(context);
+                    if (!$('#tokenfield-tokenfield').data('edit')) {
+                        $('#tokenfield-tokenfield').blur();
+                    }
+                });
+                $tokenfield.on('tokenfield:removedtoken', (e) => {
+                    if (!tokenfieldEventsOn) {
+                        console.log("tokenfield events are off");
+                        return;
+                    }
+                    let context = $('#tokenfield').tokenfield('getTokens').map(entry => entry.value);
+                    console.log("CONTEXT = " + JSON.stringify(context));
+                    view.updateContext(context);
+                });
+
+                var engine = new Bloodhound({
+                    local: libs.map(lib => { return {value: lib}}),
+                    datumTokenizer: function(d) {
+                        return Bloodhound.tokenizers.whitespace(d.value);
+                    },
+                    queryTokenizer: Bloodhound.tokenizers.whitespace
+                });
+                engine.initialize();
+                if (done) {
+                    console.log("Calling done");
+                    done();
+                    waitingForLibs = null;
+                }
+            }
+
+            // Checks whether negative tokens were added to the context box and if so, update their style
+            function checkForNegativeTokens() {
+                $('.token-label').each((idx, el) => {
+                    if (el.textContent.startsWith('-')) { //} && ! $(el).hasClass('negative')) {
+                        $(el.parentNode).addClass('negative');
+                    }
+                });
+            }
+
+            // Checks whether unrecognized libraries were added to the context box and if so, update their style
+            function checkForErrorTokens() {
+                console.log("Check for error tokens...");
+                $('.token-label').each((idx, el) => {
+                    if (!el.textContent.startsWith('-') && !isLibrary(el.textContent)) {
+                        if (!$(el.parentNode).hasClass('warning')) {
+                            $(el.parentNode).addClass('warning');
+                            el.innerHTML += ' &#x26a0;';
+                            $(el.parentNode).attr('title', 'Code Compass did not recognize this library. It will be ignored.')
+                        }
+                    }
+                });
+            }
+
+            // Returns true if the given name corresponds to a known library.
+            function isLibrary(name) {
+                if (name.startsWith('-')) name = name.substring(1);
+                return libList[language].indexOf(name) !== -1;
+            }
+
+
+            function clearError(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $box.removeClass('is-error');
+            }
+
+            // Equips the intent box with auto-completion
+            function equipSearchBox(tag, language) {
+                addAutoComplete(tag, language);
+                document.getElementById(tag).addEventListener("keyup", function(event) {
+                    event.preventDefault();
+                    // enter key
+                    if (event.keyCode === 13) { 
+                        if (intentList[language].indexOf(this.value) === -1) {
+                            this.value = null;
+                            console.log("No such intent");
+                        } else {
+                            intent = this.value;
+                            sendIntent(this.value);
+                            clearActive();
+                        }
+                        this.blur();
+                    }
+                });
+            }
+
+            // AUTOCOMPLETE
+            function addAutoComplete(tag, language) {
+                if (language in intentList) {
+                    doAddAutoComplete(tag, intentList[language]);
+                } else {
+                    api.postMessage({ command: 'getIntents', language: language });
+                }
+            }
+
+            // Downloads all libraries from the server, to allow for auto-completion on library names
+            function getAllLibs(language, callback) {
+                if (language in libList) {
+                    setAllLibs(libList[language], language);
+                    callback();
+                } else {
+                    console.log("waiting for libs...");
+                    waitingForLibs = callback;
+                    api.postMessage({ command: 'getLibs', language: language });
+                }
+            }
+
+            function doAddAutoComplete(tag, categories) {
+                new autoComplete({
+                    selector: 'input[id="' + tag + '"]',
+                    minChars: 3,
+                    source: function(term, suggest) {
+                        term = term.toLowerCase();
+                        var matches = [];
+                        for (var i=0; i<categories.length; i++) {
+                            if (~categories[i].toLowerCase().indexOf(term)) {
+                                matches.push(categories[i]);
+                            }
+                            suggest(matches);
+                        }
+                    }
+                });
+            }
+
+            // Message channel from the extension
+            window.addEventListener('message', event => {
+                console.log("message received! " + JSON.stringify([event.data.command, event.data.context]));
+                if (event.data.command === 'setStatus') {
+                    console.log("Setting status to " + event.data.msg);
+                    document.getElementById('status').innerHTML = event.data.msg;
+                    if (event.data.error) {
+                        setLanguage(null);
+                        $('.language-box').show();
+                        $('#matches').hide();
+                        hideLoading();
+                    } else {
+                        $('.language-box').hide();
+                        $('#matches').show();
+                    }
+                } else if (event.data.command === 'setContext') {
+                    console.log("Setting context:", event.data.context);
+                    ctx = event.data.context;
+                    loadCategoriesForContext();
+                    if (event.data.language && event.data.context) {
+                        setLanguage(event.data.language, () => {
+                            setContext(event.data.context);
+                            checkForErrorTokens();
+                        });
+                    }
+                } else if (event.data.command === 'setIntentsForLanguage') {
+                    intentList[event.data.language] = event.data.intents;
+                    doAddAutoComplete('intent', event.data.intents);
+                } else if (event.data.command === 'setLibsForLanguage') {
+                    libList[event.data.language] = event.data.libs;
+                    setAllLibs(event.data.libs, event.data.language, waitingForLibs);
+                } else if (event.data.command === 'setSuggestions') {
+                    view.setSuggestions(event.data.suggestions);
+                } else if (event.data.command === 'setNearestCategories') {
+                    view.setFilters(event.data.categories);
+                    view.setSuggestions(event.data.nearestSuggestions);
+                } else if (event.msg === 'disconnected') {
+                    document.getElementById('connected').style.display = 'none';
+                    document.getElementById('disconnected').style.display = 'block';
+                } else if (event.msg === 'connected') {
+                    document.getElementById('connected').style.display = 'block';
+                    document.getElementById('disconnected').style.display = 'none';
+                } else {
+                    console.log("Unsupported command: " + event.data.command);
+                }
+            });
+
+            function reconnect() {
+                api.postMessage({ command: 'tryAgain' });
+                document.getElementById('status').innerHTML = '';
+            }
+
+            window.onload = () => {
+                console.log("Window.onload -> loadContext()");
+                loadContext();
+            }
+
+            var loadContext = function() {
+                console.log("loading context...");
+                api.postMessage({ command: 'getContext' });
+            }
+            
+            function loadCategoriesForContext() {
+                api.postMessage({ command: 'getCategoriesForContext', context: ctx, language: language });
+            }
+
+            // Sets all filter buttons to inactive state
+            function clearActive() {
+                $('.tag-pill').removeClass('active');
+            }
+
+            // Sets the given element as the active filter
+            function setActive(el) {
+                $(el).addClass('active');
+            }
+
+            // Toggles the active/inactive state of the filter button
+            function toggleActive(el, event) {
+                if ($(el).parent().hasClass('active')) {
+                    $(el).parent().removeClass('active');
+                    if (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    view.setFilter();
+                    return true;
+                }
+                return false;
+            }
+
+            // FILTERS
+
+            function initFilters() {
+                initLicenseFilters();
+                //initAgeFilters();
+                initPopularityFilters();
+            }
+
+            function initLicenseFilters() {
+                $('#license-checkboxes').html('');
+                SUPPORTED_LICENSES.forEach(lic => {
+                    $('#license-checkboxes').append(`<div><input id='lic-${lic}' type="checkbox" checked="checked"><label class='w3-tiny'>${lic}</label></div>`);
+                    $(`#lic-${lic}`).bind('change', () => filterTriggered());
+                });
+                // Add other license
+                $('#license-checkboxes').append(`<div><input id='lic-other' type="checkbox" checked="checked"><input id='lic-other-value' type='text' class='w3-tiny' placeholder='other'></div>`);
+                $(`#lic-other`).bind('change', () => filterTriggered());
+                $('#lic-other-value').bind('blur', () => filterTriggered());
+                $('#lic-other-value').bind('keyup', (event) => event.keyCode === 13 ? event.target.blur() : {} );
+            }
+
+            function initAgeFilters() {
+                $('#age-checkboxes').html('');
+                SUPPORTED_AGES.forEach(age => {
+                    $('#age-checkboxes').append(`<div><input id='age-${age.name}' type="checkbox" checked="checked"><label class='w3-tiny' title='${age.title}'>${age.name}</label></div>`);
+                    $(`#age-${age.name}`).bind('change', () => filterTriggered());
+                });
+            }
+
+            function initPopularityFilters() {
+                $('#popularity-checkboxes').html('');
+                SUPPORTED_POPULARITIES.forEach(pop => {
+                    $('#popularity-checkboxes').append(`<div><input id='pop-${pop.name}' type="checkbox" checked="checked"><label class='w3-tiny' title='${pop.title}'>${pop.label}</label></div>`);
+                    $(`#pop-${pop.name}`).bind('change', () => filterTriggered());
+                });
+            }
+
+            function filterTriggered() {
+                //sendIntent(intent);
+            }
+
+            function getFilter() {
+                let checkedLic = getChecked('license');
+                if (~checkedLic.indexOf('other')) {
+                    checkedLic.splice(checkedLic.indexOf('other'),1);
+                    let other = $('#lic-other-value').val();
+                    console.log('other = ', other);
+                    if (other !== '') {
+                        checkedLic.push(other);
+                    }
+                }
+                if (checkedLic.length === SUPPORTED_LICENSES.length) { // all checked == no filter
+                    checkedLic = null;
+                }
+                // let checkedAge = getChecked('age');
+                // if (checkedAge.length === SUPPORTED_AGES.length) {
+                //     checkedAge = null;
+                // }
+                let checkedPop = getChecked('popularity');
+                if (checkedPop.length === SUPPORTED_POPULARITIES.length) {
+                    checkedPop = null;
+                }
+                // return { licenses: checkedLic, age: checkedAge, popularity: checkedPop };
+                return { licenses: checkedLic, popularity: checkedPop };
+            }
+
+            function getChecked(name) {
+                let checked = [];
+                let checkedEl = $(`#${name}-checkboxes > div > input:checked`);
+                checkedEl.each((idx, el) => checked.push($(el).attr('id').substring(4)));
+                console.log("checked", name, ":", checked);
+                return checked;
+            }
+
+            function setIntent(theIntent) {
+                console.log("setIntent: " + theIntent);
+                intent = theIntent
+                sendIntent(intent);
+            }
+
+            function getIconForModule(mod) {
+                if (language === 'java') {
+                    let groupid = mod.split(':')[0];
+                    return URL_BASE + 'logos/'+ groupid + '-logo.png';
+                } else {
+                    return URL_BASE + 'codecompass_logo_blue.png';
+                }
+            }
+
+            // Adds the given module as a positive or negative example after clicking the + / - icon in a suggested item.
+            function addToContext(mod, positive) {
+                $tokenfield.tokenfield('createToken', positive?mod:'-' + mod);
+                checkForNegativeTokens();
+                checkForErrorTokens();
+            }
+
+            // Cleans a string possibly containing characters that are reserved in HTML
+            function cleanupText(str, truncate, maxLength) {
+                var doc = new DOMParser().parseFromString(str, 'text/html');
+                let txt = doc.body.textContent.replace(/["'`]/g, '')
+                                            .replace(/={4,}/g,'')
+                                            .replace(/-{4,}/g,'')
+                                            .replace(/\~{4,}/g,'')
+                                            .replace(/\*{4,}/g,'')
+                                            .replace(/#{4,}/g,'') || "";
+            //                                              .replace(/https?:\/\/[^\s]+/g, '*url*') || "";
+                // very long words screw up the layout, truncate words to max 50 characters
+                if (truncate) {
+                    txt = txt.split(' ').map(word => word.length > 50 ? word.substring(0,50) + '...' : word).join(' ');
+                }
+                return (maxLength && txt.length > maxLength) ? (txt.slice(0, maxLength) + '...') : txt;
+            }
+
+            // Constructs the HTML list for suggestions
+            function itemizeSuggestions(suggestions) {
+                currentSuggestions = {};
+                suggestions.forEach(suggest => currentSuggestions[suggest.module] = suggest);
+            //                console.log("SUGGESTIONS: " + JSON.stringify(suggestions, null, 2));
+                var html = '';
+                html += formatItems(suggestions.slice(0,20), true);
+                if (suggestions.length > 20) {
+                    html += `<li class='suggest-item w3-card-4 w3-white hover-nokia-blue' id='show_more' onclick='showMore()'><div class='show-more-icon'><span>+</span></div></li>`
+                    html += formatItems(suggestions.slice(20, suggestions.length), false);
+                }
+                return html;
+            }
+
+            // Cleans a string possibly containing characters that are reserved in HTML
+            function cleanupText(str, truncate, maxLength) {
+                var doc = new DOMParser().parseFromString(str, 'text/html');
+                let txt = doc.body.textContent.replace(/["'`]/g, '')
+                                            .replace(/={4,}/g,'')
+                                            .replace(/-{4,}/g,'')
+                                            .replace(/\~{4,}/g,'')
+                                            .replace(/\*{4,}/g,'')
+                                            .replace(/#{4,}/g,'') || "";
+                // very long words screw up the layout, truncate words to max 50 characters
+                if (truncate) {
+                    txt = txt.split(' ').map(word => word.length > 50 ? word.substring(0,50) + '...' : word).join(' ');
+                }
+                return (maxLength && txt.length > maxLength) ? (txt.slice(0, maxLength) + '...') : txt;
+            }
+
+            function layoutSuggestions() {
+                let w = $(window).width();
+                let numCols = w > 1200 ? 3 : w > 900 ? 2 : 1;
+                $('.suggest-item').each((i, el) => {
+                    $(el).css('width', `calc(100% / ${numCols} - 20px)`);
+                    $(el).css('max-width', `calc(100% / ${numCols} - 20px)`);
+                });
+            }
+
+            $(window).resize(() => {
+                layoutSuggestions();
+            });
+
+            // Constructs the HTLM for a suggestion
+            function formatItems(suggestions, isVisible) {
+                let html = '';
+                suggestions.forEach((suggest, idx) => {
+            //        let description = (suggest.summary ? suggest.summary : '')
+                    html += `
+            <li class="suggest-item w3-card-4 w3-white hover-nokia-blue ${isVisible?'item':'hidden_item'}" style="display:${isVisible?'block':'none'}">
+            <div id='container-${idx}' class='card-container'>
+            <div>
+            <table style="width:100%;">
+                <tr>`;
+                if (language === 'java') {
+                    html += `<td width="70" rowspan="2"><img src="${getIconForModule(suggest.module)}" onerror="this.src='../images/codecompass_logo_blue.png'"  class="w3-cell-middle w3-white" style="height:40px; padding:0px;"></td>`;
+                }
+                html += `
+                    <td><p class='suggest-title' title='${suggest.module}'><b>${suggest.module}</b></p></td>
+                </tr>
+                <tr>
+                    <td style="height:12px"><div class='suggest-in'>`;
+                if (suggest.categories) {
+                    Array.from(new Set(suggest.categories)).slice(0, 5).forEach((cat, i) => {
+                        if (i > 0) {
+                            html += ', ';
+                        }
+                        html += `<a href='#' class='a-category' data-category='${cat}'>${cleanupText(cat.replace(/,/g,', ').replace(/_/g,' '), true)}</a>`;
+                    });
+                    if (suggest.categories.length > 5) {
+                        html += ", ...";
+                    }
+                }
+                html += `
+                    </div></td>
+                </tr>
+            </table>
+            <p class='suggest-description w3-small' title='${(suggest.description?cleanupText(suggest.description):cleanupText(suggest.summary)).substring(0,150)}'>${(suggest.summary?cleanupText(suggest.summary, true) + '<br><br>' : '') + cleanupText(suggest.description, true, 300)}</p>
+            <table class='suggest-info' style="width:100%;">
+                <tr>
+                    <td style='width: 150px'><span style='color: gray;' title='Number of GitHub stars assigned to this library'>${suggest.stars !== '?' ? '&#9733; ' + suggest.stars : ''} </span><span style='color: gray;' title='Number of libraries that depend on this library'>${suggest.usages !== '?' ? '&#11075; ' + suggest.usages : ''}</span></td>`;
+                if (suggest.license && suggest.license.length > 0) {
+                    html += '<td>'
+                    suggest.license.slice(0,4).forEach(lic => {
+                        if (lic  && lic !== 'null') {
+                            html += `<span class='license'>&nbsp;${cleanupText(lic, true)}&nbsp;</span>`;
+                        }
+                    });
+                    html += '</td>'
+                }
+                html += `
+                </tr>
+            </table>
+            </div>
+            <div id='overlay-${idx}' class='card-button-overlay'>
+            </div>
+            </li>`
+                });
+                return html;
+            }
+
+            // Called when the thumbs-up button is clicked on a suggested item. Sends the feedback to the server.
+            function thumbsUp(mod) {
+                api.postMessage({ command: 'feedback', data: { positive: true, module: mod, intent: intent, context: ctx, language: language } });
+                showAlert();
+            }
+
+            // Called when the thumbs-down button is clicked on a suggested item. Sends the feedback to the server.
+            function thumbsDown(mod) {
+                api.postMessage({ command: 'feedback', data: { positive: false, module: mod, intent: intent, context: ctx, language: language } });
+                showAlert();
+            }
+
+
+            // Shows the feedback popup. Automatically closes it after 4 seconds.
+            function showAlert() {
+                $(".alert").css('display', 'block');
+                $(".alert").css('opacity', 1);
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0, null, function(){
+                        $(this).hide(); 
+                    });
+                }, 4000);
+            }
+
+            function showMore() {
+                document.getElementById('show_more').style.display = 'none';
+                let items = document.getElementsByClassName('hidden_item');
+                console.log("Num hidden items = " + items.length);
+                for (var i=0;i<items.length;i++) {
+                    items[i].style.display = 'block';
+                }
+            }
+
+            function getInfo(url) {
+                console.log("Opening: " + url);
+                api.postMessage({ command: 'openURL', url: url});
+            }
+
+            function getExploreButtons(info) {
+                let html = '';
+                if (info.homepage) {
+                    html += `<div class="action-homepage tooltip" onclick="getInfo('${info.homepage}')"><span class="tooltiptext">Home Page</span></div>`;
+                }
+                if (info.github) {
+                    html += `<div class="action-github tooltip" onclick="getInfo('${info.github}')"><span class="tooltiptext">GitHub Page</span></div>`;
+                }
+                html += `<div class="action-tutorial tooltip" onclick="getInfo('${info.tutorials}')"><span class="tooltiptext">Tutorials</span></div>`;
+                html += `<div class="action-stackoverflow tooltip" onclick="getInfo('${info.stackoverflow}')"><span class="tooltiptext">Stackoverflow</span></div>`
+                return html;
+            }
+
+            // Sends a new query for a particular intent to the server. If no searchTerm (intent) is given,
+            // request the most similar libraries (closest neighbours in the model).
+            function sendIntent(searchTerm) {
+                if (searchTerm) {
+                    searchTerm = searchTerm.toLowerCase();
+                    if (intentList[language] && intentList[language].indexOf(searchTerm) === -1) {
+                        document.getElementById('intent').value = null;
+                        console.log("No such intent");
+                        return;
+                    }
+                }
+                showLoading();
+                console.log("SEARCH TERM: " + searchTerm);
+                if (!searchTerm) {
+                    api.postMessage({ command: 'getFilteredNearestCategories', context: ctx, filter: getFilter(), num: 1000 });
+                } else {
+                    api.postMessage({ command: 'getModulesForFilter', context: ctx, intent: searchTerm, filter: getFilter() });
+                }
+            }
+
+            // asks the extension to send an SSE message to the visualization web page (2D or 3D)
+            function onHoverContext(imp) {
+                if (ALLOW_VIS) {
+                    console.log("Hovering over " + imp);
+                    api.postMessage({ command: 'highlightImport', import: imp });
+                }
+            }
+
+            function onHoverSuggestions(s) {
+                if (ALLOW_VIS) {
+                    console.log("Hovering over suggestion " + s);
+                    api.postMessage({ command: 'highlightSuggestion', suggestion: s });
+                }
+            }
+        </script>
+    </body>
+</html>

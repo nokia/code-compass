@@ -1,0 +1,441 @@
+FORMAT: 1A
+
+# Code Compass
+
+Code-Compass helps you find software libraries for the **Java**, **JavaScript**  and **Python** ecosystems.  Tell Code-Compass which libraries you are already using in your current development project and it will suggest other libraries that are most compatible with those libraries. You can also use Code-Compass to find alternative libraries to the ones you are already using.
+
+### How it works
+
+Code-Compass has indexed the public package repositories for the supported programming languages: Maven (Java), NPM (JavaScript) and PyPi (Python). Our AI model has clustered all libraries on similarity (defined as "having a similar context of use") in a high-dimensional vector space, for each programming language separately. 
+
+As a result, when you query the model by providing a set of libraries as your context, Code-Compass will first calculate a vector position of that context in the model, and then return the set of libraries corresponding to the closest neighbouring vectors in this vector space.
+
+The returned libraries can either be alternatives to the libraries you already use or libraries that are frequently imported in projects with a similar context. 
+
+::: note
+#### <i class='fa fa-info'></i> Note
+Before you can use this API, you will need to request an API_KEY.
+:::
+
+## Group Main
+
+To access the main Code-Compass website on behalf of an anonymous user through an `API_KEY`.
+
+#### Main Page Access [GET /api?API_KEY={API_KEY}&language={language}&context={context}&intent={intent}]
+
++ Parameters
+
+    + API_KEY: `33v7g35761fexample-key21b757d9ae51538123912812` (string, required) - your API key
+
+    + language: `java` (string, required) - the programming language 
+        + Members
+            + `java`
+            + `js`
+            + `python`
+
+    + context: `numpy,matplotlib` (string, required) - a comma-separated list of `context` libraries
+
+    + intent: `database` (string, optional) - an optional `intent` for filtering the results against
+
++ Response 200 (text/html)
+
+    Successful Response
+
+    + Body
+
+            <!DOCTYPE html>
+            <html>
+                ...
+            </html>
+
++ Response 400 (text/html)
+
+    If the request misses required query string parameters.
+
+    + Body
+
+
++ Response 401 (text/html)
+
+    In case of missing or invalid API Key.
+
+    + Body
+    
+
+## Group Querying
+
+#### Search Libraries Similar To Context [POST /mostSimilar/{language}]
+
+This method allows you to explore the vector space around a given context, specified as a set of libraries, packages or classes. 
+
+It will return 2 things:
+- `categories` - **a set of tags/categories that best reflect your context.** This set is calculated by looking at the tags associated with a large set of close neighbours. They are sorted by their frequency of occurrence and their distance to your context.
+- `modules` - **a set of most similar libraries to your given context.** The returned libraries are annotated with metadata such as a library description, usage information, licensing information, URLs about the library and the categories/tags associated with each library. 
+
+::: warning
+#### <i class='fa fa-warning'></i> Important
+Be sure to pass your API_KEY in the Authorization header!
+:::
+
++ Parameters
+
+    + language: `java` (string, required) - the programming language 
+        + Members
+            + `java`
+            + `js`
+            + `python`
+        
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+            Authorization: API_KEY
+
+    + Body
+
+            [
+              "org.apache.spark",
+              "org.apache.zookeeper"
+            ]
+
+
++ Response 200 (application/json)
+
+    A list of categories deemed relevant for the context and a list of nearest libraries with their annotations.
+
+    + Body
+
+            {
+                "categories": [
+                    [
+                        "database",
+                        5285
+                    ],
+                    [
+                        "distributed applications",
+                        3118
+                    ],
+                    [
+                        "machine learning",
+                        1898
+                    ]
+                ],
+                "modules": [
+                    {
+                        "module": "org.apache.curator",
+                        "stars": 876,
+                        "usages": "5.9K",
+                        "license": [
+                            "APACHE V2"
+                        ],
+                        "info": {
+                            "homepage": "http://curator.apache.org",
+                            "github": "http://github.com/apache/curator/blob/master/README.md",
+                            "tutorials": "https://www.google.com/search?q=tutorial+org.apache.curator",
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=org.apache.curator+curator-client"
+                        },
+                        "description": "Low-level API"
+                    },
+                    {
+                        "module": "org.apache.hadoop",
+                        "stars": "5.8K",
+                        "usages": "27.0K",
+                        "license": [],
+                        "info": {
+                            "homepage": "http://hadoop.apache.org",
+                            "tutorials": "https://www.google.com/search?q=tutorial+org.apache.hadoop",
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=org.apache.hadoop+hadoop-auth"
+                        },
+                        "description": "The Apache™ Hadoop® project develops open-source software for reliable, \nscalable, distributed computing. The Apache Hadoop software library is a ...",
+                        "categories": [
+                            "Machine Learning"
+                        ]
+                    }
+                ]
+            }
+
++ Response 500 (application/json)
+
+    Internal error
+
+    + Body
+
+#### Search Libraries by intent [POST /searchByIntent/{language}]
+
+Returns the most compatible libraries for a given context, filtered by a given intent.  Returns 2 sets of libraries: 
+  - `filtered` - a filtered and annotated set of libraries for display purposes. In this set, multiple sub-libraries belonging to the same top-level library are collapsed onto that top-level library. The annotations contain metadata such as a library description, usage information, licensing information, URLs about the library and the categories/tags associated with it. 
+  - `raw` - the unfiltered set of nearest libraries (strings)
+
+::: warning
+#### <i class='fa fa-warning'></i> Important
+Be sure to pass your API_KEY in the Authorization header!
+:::
+
+::: note
+#### <i class='fa fa-info'></i> Note
+This method is similar to `/mostSimilar`, but will first filter the vector space by intent before applying nearest neighbour search. The method does NOT calculate relevant categories. It is therefore much less computationally intensive.
+:::
+
++ Parameters
+
+    + language: `python` (string, required) - the programming language
+        + members
+            - `java`
+            - `js`
+            - `python`
+    
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+            Authorization: API_KEY
+
+    + Body
+
+            {
+              "context": [
+                "numpy",
+                "keras"
+              ],
+              "intent": "data visualization"
+            }
+
+
++ Response 200 (application/json)
+
+    List of raw and filtered suggestions matching the given filter (intent) and sorted by distance to the given context (closest first).
+
+    + Body
+
+            {
+                "raw": [
+                    "matplotlib",
+                    "seaborn",
+                    "bokeh",
+                    "pyqtgraph"
+                ],
+                "filtered": [
+                    {
+                        "module": "matplotlib",
+                        "stars": "?",
+                        "usages": "2.8K",
+                        "license": [
+                            "BSD"
+                        ],
+                        "info": {
+                            "homepage": "http://matplotlib.org",
+                            "tutorials": "https://www.google.com/search?q=tutorial+matplotlib",
+                            "github": null,
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=matplotlib"
+                        },
+                        "summary": "Python plotting package",
+                        "description": "<p>matplotlib strives to produce publication quality 2D graphics\n        for interactive graphing, scientific publishing, user interface\n        development and web application servers targeting multiple user\n        interfaces and hardcopy output formats.  There is a 'pylab' mode\n        which emulates matlab graphics.</p>"
+                    },
+                    {
+                        "module": "seaborn",
+                        "stars": "5.4K",
+                        "usages": 369,
+                        "license": [
+                            "BSD (3-clause)"
+                        ],
+                        "info": {
+                            "homepage": "https://seaborn.pydata.org",
+                            "tutorials": "https://www.google.com/search?q=tutorial+seaborn",
+                            "github": null,
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=seaborn"
+                        },
+                        "summary": "seaborn: statistical data visualization",
+                        "description": "Statistical data visualization using matplotlib"
+                    },
+                    {
+                        "module": "bokeh",
+                        "stars": "8.4K",
+                        "usages": 115,
+                        "license": [
+                            "New BSD"
+                        ],
+                        "info": {
+                            "homepage": "http://github.com/bokeh/bokeh",
+                            "tutorials": "https://www.google.com/search?q=tutorial+bokeh",
+                            "github": null,
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=bokeh"
+                        },
+                        "summary": "Interactive plots and applications in the browser from Python",
+                        "description": "Interactive Web Plotting for Python"
+                    },
+                    {
+                        "module": "pyqtgraph",
+                        "stars": "?",
+                        "usages": 83,
+                        "license": [
+                            "MIT"
+                        ],
+                        "info": {
+                            "homepage": "http://www.pyqtgraph.org",
+                            "tutorials": "https://www.google.com/search?q=tutorial+pyqtgraph",
+                            "github": null,
+                            "stackoverflow": "https://www.stackoverflow.com/search?q=pyqtgraph"
+                        },
+                        "summary": "Scientific Graphics and GUI Library for Python",
+                        "description": "<p>PyQtGraph is a pure-python graphics and GUI library built on PyQt4/PySide and\nnumpy. </p>\n<p>It is intended for use in mathematics / scientific / engineering applications.\nDespite being written entirely in python, the library is very fast due to its\nheavy leverage of numpy for number crunching, Qt's GraphicsView framework for\n2D display, and OpenGL for 3D display.</p>"
+                    }
+                ]
+            }
+
++ Response 500 (application/json)
+
+    Internal error
+
+    + Body
+
+## Group Mapping
+
+#### Mapping [POST /mapping/{language}/{specification}]
+
+Low-level API to map between packages, libraries and categories.
+
++ Parameters
+
+    + language: `java` (string, required) - the programming language
+        + members
+            - `java`
+            - `js`
+            - `python`
+    
+    + specification: `moduleForPackage` (string, required) - the mapping method to use
+        + members
+            - `moduleForPackage`
+            - `modulesForPackages`
+            - `categoriesForModule`
+            - `categoriesForPackage`
+            - `categoriesForPackages`
+            - `packagesForModule`
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+            Authorization: API_KEY
+
+    + Body
+
+            ["org.apache.spark"]
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            "org.apache.spark:spark-core_2.11"
+
++ Response 204 (application/json)
+
+    No mapping found
+
+    + Body
+
+
+## Group Data Access
+
+Get access to data used by Code-Compass (supported libraries, supported intents)
+
+#### Intents for Language [GET /intents/{language}]
+
+Returns a list of supported intents. These are the intents supported by `/searchByIntent`
+
++ Parameters
+
+    + language: `js` (string, required) - the programming language
+        + members
+            - `java`
+            - `js`
+            - `python`
+    
++ Request
+
+    + Headers
+
+            Accept: application/json
+            Authorization: API_KEY
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                "nlp",
+                "streaming",
+                "templating",
+                "testing",
+                "image",
+                "logging",
+                "benchmarking"
+            ]
+
+#### Libraries for Language [GET /libs/{language}]
+
+Returns the list of libraries indexed by Code-Compass for the given ecosystem. These are the libraries supported in the `context` parameter of the `/mostSimilar` and `/searchByIntent` request bodies.
+
++ Parameters
+
+    + language: `java` (string, required) - the programming language
+        + members
+            - `java`
+            - `js`
+            - `python`
+    
++ Request
+
+    + Headers
+
+            Accept: application/json
+            Authorization: API_KEY
+
++ Response 200 (application/json)
+
+
+    + Body
+
+            [
+              "rt-8-javax:javax-management",
+              "backport-util-concurrent:backport-util-concurrent",
+              "rt-8-java:java-util",
+              "rt-8-javax-xml:javax-xml-transform",
+              "rt-8-java:java-io",
+              "rt-8-javax:javax-transaction",
+              "rt-8-javax:javax-naming"
+            ]
+
+
+## Group Feedback
+
+Send feedback about individual suggestions
+
+#### Give Feedback [POST /feedback]
+
+Call this to give a thumbs-up or -down for a specific suggestion.
+
++ Request (application/json)
+
+    + Body
+
+            { 
+                "positive": true,
+                "module" : "matplotlib",
+                "intent" : "data visualization",
+                "context": [
+                    "numpy",
+                    "math"
+                ],
+                "language": "python"
+            }
+
++ Response 200
+
+    operation successful
+
+    + Body

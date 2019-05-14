@@ -1,0 +1,130 @@
+.vscode-dark p {
+    color: white;
+}
+
+.vscode-light h2 {
+    color: rgb(25,71,145);
+}
+
+.vscode-light h3 {
+    color: rgb(25,71,145);
+}
+
+.vscode-dark h2 {
+    color: rgb(43,200,251);
+}
+
+.vscode-dark h3 {
+    color: rgb(43,200,251);
+}
+
+.vscode-light .nokia-blue {
+    background-color: rgb(25,71,145);
+    color: white;
+}
+
+.vscode-dark .nokia-blue {
+    background-color: rgb(43,200,251);
+    color: black;
+}
+
+.vscode-light .hover-nokia-blue:hover {
+    color:#fff!important;
+    background-color:rgb(25,71,145)!important;
+}
+
+.vscode-dark .hover-nokia-blue:hover {
+    color:black !important;
+    background-color:rgb(43,200,251)!important;
+}
+
+.vscode-dark .quick-pick-button {
+    border-color: rgb(43,200,251);
+}
+
+.suggest-item p {
+    color: black;
+}
+
+.scroll {
+    width: calc(100%-40px);
+    margin: 40px;
+    padding: 0px;
+    padding-top: 0px;
+}
+
+.scroll ul {
+    /* max-height: 400px; */
+    /* overflow:hidden;  */
+    /* overflow-y:scroll; */
+}
+
+.scroll-horizontal ul {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+.horizontal-list li {
+    float: left;
+    display: block;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+td .button-col {
+    width: 135px;
+}
+
+.license {
+    color:steelblue;
+    font-size:7pt;
+    border-color:steelblue;
+    border-style:solid;
+    border-width:0.5pt;
+    border-radius:2pt;
+    margin-left: 5pt;
+}
+
+.description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /* white-space: nowrap; */
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+

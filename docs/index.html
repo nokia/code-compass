@@ -1,0 +1,449 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Code Compass</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#fff;background-color:#337ab7}.action h4.action-heading .method.head{color:#fff;background-color:#337ab7}.action h4.action-heading .method.options{color:#fff;background-color:#337ab7}.action h4.action-heading .method.put{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.post{color:#fff;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#fff;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container-fluid"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-how-it-works">How it works</a></li><li><a href="#header-note"> Note</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#main">Main</a></div><div class="collapse-content"><ul><li><a href="#main-main-page-access-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Main Page Access</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#querying">Querying</a></div><div class="collapse-content"><ul><li><a href="#querying-search-libraries-similar-to-context-post"><span class="badge post"><i class="fa fa-plus"></i></span>Search Libraries Similar To Context</a></li><li><a href="#querying-search-libraries-by-intent-post"><span class="badge post"><i class="fa fa-plus"></i></span>Search Libraries by intent</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#mapping">Mapping</a></div><div class="collapse-content"><ul><li><a href="#mapping-mapping-post"><span class="badge post"><i class="fa fa-plus"></i></span>Mapping</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#data-access">Data Access</a></div><div class="collapse-content"><ul><li><a href="#data-access-intents-for-language-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Intents for Language</a></li><li><a href="#data-access-libraries-for-language-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Libraries for Language</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#feedback">Feedback</a></div><div class="collapse-content"><ul><li><a href="#feedback-give-feedback-post"><span class="badge post"><i class="fa fa-plus"></i></span>Give Feedback</a></li></ul></div></div></nav><div class="content"><header><h1 id="top">Code Compass</h1></header><p>Code-Compass helps you find software libraries for the <strong>Java</strong>, <strong>JavaScript</strong>  and <strong>Python</strong> ecosystems.  Tell Code-Compass which libraries you are already using in your current development project and it will suggest other libraries that are most compatible with those libraries. You can also use Code-Compass to find alternative libraries to the ones you are already using.</p>
+<h3 id="header-how-it-works">How it works <a class="permalink" href="#header-how-it-works" aria-hidden="true">¶</a></h3>
+<p>Code-Compass has indexed the public package repositories for the supported programming languages: Maven (Java), NPM (JavaScript) and PyPi (Python). Our AI model has clustered all libraries on similarity (defined as “having a similar context of use”) in a high-dimensional vector space, for each programming language separately.</p>
+<p>As a result, when you query the model by providing a set of libraries as your context, Code-Compass will first calculate a vector position of that context in the model, and then return the set of libraries corresponding to the closest neighbouring vectors in this vector space.</p>
+<p>The returned libraries can either be alternatives to the libraries you already use or libraries that are frequently imported in projects with a similar context.</p>
+<div class="note">
+<h4 id="header-note"><i class='fa fa-info'></i> Note <a class="permalink" href="#header-note" aria-hidden="true">¶</a></h4>
+<p>Before you can use this API, you will need to request an API_KEY.</p>
+</div>
+<section id="main" class="resource-group"><h2 class="group-heading">Main <a href="#main" class="permalink">&para;</a></h2><p>To access the main Code-Compass website on behalf of an anonymous user through an <code>API_KEY</code>.</p>
+<div id="main-main-page-access" class="resource"><h3 class="resource-heading">Main Page Access <a href="#main-main-page-access" class="permalink">&nbsp;&para;</a></h3><div id="main-main-page-access-get" class="action get"><h4 class="action-heading"><div class="name">Main Page Access</div><a href="#main-main-page-access-get" class="method get">GET</a><code class="uri">/api?API_KEY={API_KEY}&amp;language={language}&amp;context={context}&amp;intent={intent}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname"></span>/api?API_KEY=<span class="hljs-attribute" title="API_KEY">33v7g35761fexample-key21b757d9ae51538123912812</span>&language=<span class="hljs-attribute" title="language">java</span>&context=<span class="hljs-attribute" title="context">numpy,matplotlib</span>&intent=<span class="hljs-attribute" title="intent">database</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>API_KEY</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>33v7g35761fexample-key21b757d9ae51538123912812</span></span><p>your API key</p>
+</dd><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd><dt>context</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>numpy,matplotlib</span></span><p>a comma-separated list of <code>context</code> libraries</p>
+</dd><dt>intent</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>database</span></span><p>an optional <code>intent</code> for filtering the results against</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>Successful Response</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/html</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+    ...
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>400</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>If the request misses required query string parameters.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/html</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>In case of missing or invalid API Key.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/html</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="querying" class="resource-group"><h2 class="group-heading">Querying <a href="#querying" class="permalink">&para;</a></h2><div id="querying-search-libraries-similar-to-context" class="resource"><h3 class="resource-heading">Search Libraries Similar To Context <a href="#querying-search-libraries-similar-to-context" class="permalink">&nbsp;&para;</a></h3><div id="querying-search-libraries-similar-to-context-post" class="action post"><h4 class="action-heading"><div class="name">Search Libraries Similar To Context</div><a href="#querying-search-libraries-similar-to-context-post" class="method post">POST</a><code class="uri">/mostSimilar/{language}</code></h4><p>This method allows you to explore the vector space around a given context, specified as a set of libraries, packages or classes.</p>
+<p>It will return 2 things:</p>
+<ul>
+<li>
+<p><code>categories</code> - <strong>a set of tags/categories that best reflect your context.</strong> This set is calculated by looking at the tags associated with a large set of close neighbours. They are sorted by their frequency of occurrence and their distance to your context.</p>
+</li>
+<li>
+<p><code>modules</code> - <strong>a set of most similar libraries to your given context.</strong> The returned libraries are annotated with metadata such as a library description, usage information, licensing information, URLs about the library and the categories/tags associated with each library.</p>
+</li>
+</ul>
+<div class="warning">
+<h4 id="header-important"><i class='fa fa-warning'></i> Important <a class="permalink" href="#header-important" aria-hidden="true">¶</a></h4>
+<p>Be sure to pass your API_KEY in the Authorization header!</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mostSimilar/<span class="hljs-attribute" title="language">java</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">API_KEY</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  <span class="hljs-string">"org.apache.spark"</span>,
+  <span class="hljs-string">"org.apache.zookeeper"</span>
+]</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>A list of categories deemed relevant for the context and a list of nearest libraries with their annotations.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">categories</span>": <span class="hljs-value">[
+    [
+      <span class="hljs-string">"database"</span>,
+      <span class="hljs-number">5285</span>
+    ],
+    [
+      <span class="hljs-string">"distributed applications"</span>,
+      <span class="hljs-number">3118</span>
+    ],
+    [
+      <span class="hljs-string">"machine learning"</span>,
+      <span class="hljs-number">1898</span>
+    ]
+  ]</span>,
+  "<span class="hljs-attribute">modules</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"org.apache.curator"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-number">876</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-string">"5.9K"</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[
+        <span class="hljs-string">"APACHE V2"</span>
+      ]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"http://curator.apache.org"</span></span>,
+        "<span class="hljs-attribute">github</span>": <span class="hljs-value"><span class="hljs-string">"http://github.com/apache/curator/blob/master/README.md"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+org.apache.curator"</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=org.apache.curator+curator-client"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Low-level API"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"org.apache.hadoop"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-string">"5.8K"</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-string">"27.0K"</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"http://hadoop.apache.org"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+org.apache.hadoop"</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=org.apache.hadoop+hadoop-auth"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"The Apache™ Hadoop® project develops open-source software for reliable, \nscalable, distributed computing. The Apache Hadoop software library is a ..."</span></span>,
+      "<span class="hljs-attribute">categories</span>": <span class="hljs-value">[
+        <span class="hljs-string">"Machine Learning"</span>
+      ]
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>500</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>Internal error</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div><div id="querying-search-libraries-by-intent" class="resource"><h3 class="resource-heading">Search Libraries by intent <a href="#querying-search-libraries-by-intent" class="permalink">&nbsp;&para;</a></h3><div id="querying-search-libraries-by-intent-post" class="action post"><h4 class="action-heading"><div class="name">Search Libraries by intent</div><a href="#querying-search-libraries-by-intent-post" class="method post">POST</a><code class="uri">/searchByIntent/{language}</code></h4><p>Returns the most compatible libraries for a given context, filtered by a given intent.  Returns 2 sets of libraries:</p>
+<ul>
+<li>
+<p><code>filtered</code> - a filtered and annotated set of libraries for display purposes. In this set, multiple sub-libraries belonging to the same top-level library are collapsed onto that top-level library. The annotations contain metadata such as a library description, usage information, licensing information, URLs about the library and the categories/tags associated with it.</p>
+</li>
+<li>
+<p><code>raw</code> - the unfiltered set of nearest libraries (strings)</p>
+</li>
+</ul>
+<div class="warning">
+<h4 id="header-important-1"><i class='fa fa-warning'></i> Important <a class="permalink" href="#header-important-1" aria-hidden="true">¶</a></h4>
+<p>Be sure to pass your API_KEY in the Authorization header!</p>
+</div>
+<div class="note">
+<h4 id="header-note-1"><i class='fa fa-info'></i> Note <a class="permalink" href="#header-note-1" aria-hidden="true">¶</a></h4>
+<p>This method is similar to <code>/mostSimilar</code>, but will first filter the vector space by intent before applying nearest neighbour search. The method does NOT calculate relevant categories. It is therefore much less computationally intensive.</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/searchByIntent/<span class="hljs-attribute" title="language">python</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>python</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">API_KEY</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">context</span>": <span class="hljs-value">[
+    <span class="hljs-string">"numpy"</span>,
+    <span class="hljs-string">"keras"</span>
+  ]</span>,
+  "<span class="hljs-attribute">intent</span>": <span class="hljs-value"><span class="hljs-string">"data visualization"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>List of raw and filtered suggestions matching the given filter (intent) and sorted by distance to the given context (closest first).</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">raw</span>": <span class="hljs-value">[
+    <span class="hljs-string">"matplotlib"</span>,
+    <span class="hljs-string">"seaborn"</span>,
+    <span class="hljs-string">"bokeh"</span>,
+    <span class="hljs-string">"pyqtgraph"</span>
+  ]</span>,
+  "<span class="hljs-attribute">filtered</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"matplotlib"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-string">"?"</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-string">"2.8K"</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[
+        <span class="hljs-string">"BSD"</span>
+      ]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"http://matplotlib.org"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+matplotlib"</span></span>,
+        "<span class="hljs-attribute">github</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=matplotlib"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">summary</span>": <span class="hljs-value"><span class="hljs-string">"Python plotting package"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"&lt;p&gt;matplotlib strives to produce publication quality 2D graphics\n        for interactive graphing, scientific publishing, user interface\n        development and web application servers targeting multiple user\n        interfaces and hardcopy output formats.  There is a 'pylab' mode\n        which emulates matlab graphics.&lt;/p&gt;"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"seaborn"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-string">"5.4K"</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-number">369</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[
+        <span class="hljs-string">"BSD (3-clause)"</span>
+      ]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"https://seaborn.pydata.org"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+seaborn"</span></span>,
+        "<span class="hljs-attribute">github</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=seaborn"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">summary</span>": <span class="hljs-value"><span class="hljs-string">"seaborn: statistical data visualization"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Statistical data visualization using matplotlib"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"bokeh"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-string">"8.4K"</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-number">115</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[
+        <span class="hljs-string">"New BSD"</span>
+      ]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"http://github.com/bokeh/bokeh"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+bokeh"</span></span>,
+        "<span class="hljs-attribute">github</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=bokeh"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">summary</span>": <span class="hljs-value"><span class="hljs-string">"Interactive plots and applications in the browser from Python"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Interactive Web Plotting for Python"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"pyqtgraph"</span></span>,
+      "<span class="hljs-attribute">stars</span>": <span class="hljs-value"><span class="hljs-string">"?"</span></span>,
+      "<span class="hljs-attribute">usages</span>": <span class="hljs-value"><span class="hljs-number">83</span></span>,
+      "<span class="hljs-attribute">license</span>": <span class="hljs-value">[
+        <span class="hljs-string">"MIT"</span>
+      ]</span>,
+      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">homepage</span>": <span class="hljs-value"><span class="hljs-string">"http://www.pyqtgraph.org"</span></span>,
+        "<span class="hljs-attribute">tutorials</span>": <span class="hljs-value"><span class="hljs-string">"https://www.google.com/search?q=tutorial+pyqtgraph"</span></span>,
+        "<span class="hljs-attribute">github</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">stackoverflow</span>": <span class="hljs-value"><span class="hljs-string">"https://www.stackoverflow.com/search?q=pyqtgraph"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">summary</span>": <span class="hljs-value"><span class="hljs-string">"Scientific Graphics and GUI Library for Python"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"&lt;p&gt;PyQtGraph is a pure-python graphics and GUI library built on PyQt4/PySide and\nnumpy. &lt;/p&gt;\n&lt;p&gt;It is intended for use in mathematics / scientific / engineering applications.\nDespite being written entirely in python, the library is very fast due to its\nheavy leverage of numpy for number crunching, Qt's GraphicsView framework for\n2D display, and OpenGL for 3D display.&lt;/p&gt;"</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>500</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>Internal error</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="mapping" class="resource-group"><h2 class="group-heading">Mapping <a href="#mapping" class="permalink">&para;</a></h2><div id="mapping-mapping" class="resource"><h3 class="resource-heading">Mapping <a href="#mapping-mapping" class="permalink">&nbsp;&para;</a></h3><div id="mapping-mapping-post" class="action post"><h4 class="action-heading"><div class="name">Mapping</div><a href="#mapping-mapping-post" class="method post">POST</a><code class="uri">/mapping/{language}/{specification}</code></h4><p>Low-level API to map between packages, libraries and categories.</p>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mapping/<span class="hljs-attribute" title="language">java</span>/<span class="hljs-attribute" title="specification">moduleForPackage</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd><dt>specification</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>moduleForPackage</span></span><p>the mapping method to use</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>moduleForPackage</code> <code>modulesForPackages</code> <code>categoriesForModule</code> <code>categoriesForPackage</code> <code>categoriesForPackages</code> <code>packagesForModule</code> </p></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">API_KEY</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  <span class="hljs-string">"org.apache.spark"</span>
+]</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-string">"org.apache.spark:spark-core_2.11"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>No mapping found</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="data-access" class="resource-group"><h2 class="group-heading">Data Access <a href="#data-access" class="permalink">&para;</a></h2><p>Get access to data used by Code-Compass (supported libraries, supported intents)</p>
+<div id="data-access-intents-for-language" class="resource"><h3 class="resource-heading">Intents for Language <a href="#data-access-intents-for-language" class="permalink">&nbsp;&para;</a></h3><div id="data-access-intents-for-language-get" class="action get"><h4 class="action-heading"><div class="name">Intents for Language</div><a href="#data-access-intents-for-language-get" class="method get">GET</a><code class="uri">/intents/{language}</code></h4><p>Returns a list of supported intents. These are the intents supported by <code>/searchByIntent</code></p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname"></span>/intents/<span class="hljs-attribute" title="language">js</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>js</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">API_KEY</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  <span class="hljs-string">"nlp"</span>,
+  <span class="hljs-string">"streaming"</span>,
+  <span class="hljs-string">"templating"</span>,
+  <span class="hljs-string">"testing"</span>,
+  <span class="hljs-string">"image"</span>,
+  <span class="hljs-string">"logging"</span>,
+  <span class="hljs-string">"benchmarking"</span>
+]</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="data-access-libraries-for-language" class="resource"><h3 class="resource-heading">Libraries for Language <a href="#data-access-libraries-for-language" class="permalink">&nbsp;&para;</a></h3><div id="data-access-libraries-for-language-get" class="action get"><h4 class="action-heading"><div class="name">Libraries for Language</div><a href="#data-access-libraries-for-language-get" class="method get">GET</a><code class="uri">/libs/{language}</code></h4><p>Returns the list of libraries indexed by Code-Compass for the given ecosystem. These are the libraries supported in the <code>context</code> parameter of the <code>/mostSimilar</code> and <code>/searchByIntent</code> request bodies.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname"></span>/libs/<span class="hljs-attribute" title="language">java</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>language</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>java</span></span><p>the programming language</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>java</code> <code>js</code> <code>python</code> </p></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">API_KEY</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  <span class="hljs-string">"rt-8-javax:javax-management"</span>,
+  <span class="hljs-string">"backport-util-concurrent:backport-util-concurrent"</span>,
+  <span class="hljs-string">"rt-8-java:java-util"</span>,
+  <span class="hljs-string">"rt-8-javax-xml:javax-xml-transform"</span>,
+  <span class="hljs-string">"rt-8-java:java-io"</span>,
+  <span class="hljs-string">"rt-8-javax:javax-transaction"</span>,
+  <span class="hljs-string">"rt-8-javax:javax-naming"</span>
+]</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="feedback" class="resource-group"><h2 class="group-heading">Feedback <a href="#feedback" class="permalink">&para;</a></h2><p>Send feedback about individual suggestions</p>
+<div id="feedback-give-feedback" class="resource"><h3 class="resource-heading">Give Feedback <a href="#feedback-give-feedback" class="permalink">&nbsp;&para;</a></h3><div id="feedback-give-feedback-post" class="action post"><h4 class="action-heading"><div class="name">Give Feedback</div><a href="#feedback-give-feedback-post" class="method post">POST</a><code class="uri">/feedback</code></h4><p>Call this to give a thumbs-up or -down for a specific suggestion.</p>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/feedback</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">positive</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">module</span>": <span class="hljs-value"><span class="hljs-string">"matplotlib"</span></span>,
+  "<span class="hljs-attribute">intent</span>": <span class="hljs-value"><span class="hljs-string">"data visualization"</span></span>,
+  "<span class="hljs-attribute">context</span>": <span class="hljs-value">[
+    <span class="hljs-string">"numpy"</span>,
+    <span class="hljs-string">"math"</span>
+  ]</span>,
+  "<span class="hljs-attribute">language</span>": <span class="hljs-value"><span class="hljs-string">"python"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><p>operation successful</p>
+</div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 14 May 2019</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>

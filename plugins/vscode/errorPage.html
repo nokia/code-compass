@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Compass</title>
+        <style>
+            .vscode-light h2 {
+                color: rgb(25,71,145);
+            }
+            .vscode-light p {
+                color: black;
+            }
+
+            .vscode-dark h2 {
+                color: rgb(43,200,251);
+            } 
+
+            .vscode-dark p {
+                color: white;
+            }
+    </style>
+    </head>
+    <!-- <body style='background-color:rgb(0,91,208);'> -->
+    <body>
+        <h2>Code Compass -- Oops...</h2>
+        <p>Failed to communicate with server. Please verify that you can reach <a href="$${serverURL}">$${serverURL}</a></p>
+        <p>You may need to configure a proxy in <code>Code > Preferences > Settings</code>.
+        <p>Search for configuration key <code>http.proxy</code></p>
+        <button onclick='reload();blur()'>Try again</button>
+        <p id='status' style='font-weight: bold;color:red'></p>
+
+        <script>
+            let api = acquireVsCodeApi();
+
+            // Message channel from the extension
+            window.addEventListener('message', event => {
+                console.log("message received! " + JSON.stringify(event.data));
+                if (event.data.msg === 'connected') {
+                    api.postMessage({ command: 'showMainView' });
+                } else if (event.data.msg == 'disconnected') {
+                    document.getElementById('status').innerHTML = "Still not able to connect...";
+                } else {
+                    console.log("Unsupported command: " + event.data.command);
+                }
+            });
+
+
+            function reload() {
+                api.postMessage({ command: 'tryAgain' });
+                document.getElementById('status').innerHTML = '';
+            }
+        </script>
