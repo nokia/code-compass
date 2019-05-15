@@ -256,6 +256,23 @@
                 $('.loading-overlay').css('display', 'none');
             }
 
+            function showDetailsOverlay(module) {
+                $('#details-title').html(module);
+                $('#details-description').contents().find('html').html(currentSuggestions[module].description);
+                $('#details-description').contents().find('head').append($("<link/>", { 
+                    rel: "stylesheet", href: "../css/w3.css", type: "text/css" }));
+                $('.details-popup').css('display', 'flex');
+            }
+
+            function hideDetailsOverlay(onButton, event) {
+                if (!onButton && event.target.id !== 'details-popup') {
+                    // ignore
+                    return;
+                }
+                $('#details-title').innerHTML = '';
+                $('#details-description').innerHTML = '';
+                $('.details-popup').css('display', 'none');
+            }
 
             // Class to update the view with results from the server
             class View {
@@ -305,6 +322,36 @@
                         document.getElementById('no-matches').style.display = 'none';
                         document.getElementById('recommendations-pane').style.display = 'block';
                         document.getElementById('suggestions').innerHTML = itemizeSuggestions(suggestions); //.slice(0,10)); 
+                       // add event handlers
+                       suggestions.forEach((suggest, idx) => {
+                            $(`#container-${idx}`).bind('dblclick', () => showDetailsOverlay(`${suggest.module}`))
+                                                .bind('mouseover', () => $(`#overlay-${idx}`).show() && onHoverSuggestions(`${suggest.module}`))
+                                                .bind('mouseleave', () => $(`#overlay-${idx}`).hide());
+                            $(`#overlay-${idx}`).append(`<div id='pos-to-context-${idx}' class='add-remove-icon' title='Add this library to your context'><span>+</span></div>`)
+                                                .append(`<div id='neg-to-context-${idx}' class='add-remove-icon' title='Add this library as a negative example to your context'><span>-</span></div>`);
+                            $(`#pos-to-context-${idx}`).bind('click', () =>  addToContext(`${suggest.module}`, true));
+                            $(`#neg-to-context-${idx}`).bind('click', () =>  addToContext(`${suggest.module}`, false));
+                            if (suggest.info.homepage) {
+                                $(`#overlay-${idx}`).append(`<div id='action-homepage-${idx}' class='action-homepage' title='Home Page'></div>`);
+                                $(`#action-homepage-${idx}`).bind('click', () => getInfo(`${suggest.info.homepage}`));
+                            }
+                            if (suggest.info.github) {
+                                $(`#overlay-${idx}`).append(`<div id='action-github-${idx}' class='action-github' title='GitHub Page'></div>`);
+                                $(`#action-github-${idx}`).bind('click', () => getInfo(`${suggest.info.github}`));
+                            }
+                            $(`#overlay-${idx}`).append(`<div id='action-so-${idx}' class='action-stackoverflow' title='StackOverflow'></div>`)
+                                                .append(`<div id='action-thumbsup-${idx}' class='action-thumbsup' title='This recommendation was helpful'><i class='far fa-thumbs-up'></i></div>`)
+                                                .append(`<div id='action-thumbsdown-${idx}' class='action-thumbsdown' title='This recommendation was NOT helpful'><i class='far fa-thumbs-down'></i></div>`);
+                            $(`#action-so-${idx}`).bind('click', () =>  getInfo(`${suggest.info.stackoverflow}`));
+                            $(`#action-thumbsup-${idx}`).bind('click', () => thumbsUp(`${suggest.module}`));
+                            $(`#action-thumbsdown-${idx}`).bind('click', () => thumbsDown(`${suggest.module}`));                                      
+                        });
+                        if (suggestions.length > 20) {
+                            $('#show_more').bind('click', () => showMore());
+                        }
+                        $('.a-category').each((idx, el) => {
+                            $(el).bind('click', () => view.setFilter($(el).data("category")));
+                        });
                         layoutSuggestions();
                     }
                     hideLoading();
