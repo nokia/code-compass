@@ -4,15 +4,26 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Code Compass</title>
-        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet">
+        <!-- 
+            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+            <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet"> 
+        -->
+        <link href="$${serverURL}/3rdparty/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="$${serverURL}/3rdparty/jquery/jquery-ui.css" type="text/css" rel="stylesheet">
         <link href="$${serverURL}/3rdparty/tokenfield/css/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
         <link href="$${serverURL}/3rdparty/tokenfield/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="$${serverURL}/3rdparty/fontawesome/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- 
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+        -->
+        <script type="text/javascript" src="$${serverURL}/3rdparty/jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="$${serverURL}/3rdparty/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="$${serverURL}/3rdparty/bootstrap/bootstrap.min.js"></script>
+
         <script type="text/javascript" src="$${serverURL}/3rdparty/tokenfield/bootstrap-tokenfield.js" charset="UTF-8"></script>
         <script type="text/javascript" src="$${serverURL}/3rdparty/tokenfield/docs-assets/js/typeahead.bundle.min.js" charset="UTF-8"></script>
 
@@ -124,7 +135,7 @@
                     <table id='tokenfield-tab'>
                         <tr>
                             <td><input id='tokenfield' type="text" value="" placeholder="Add libraries"/></td>
-                            <td style='width: 0px;'><span class="fas fa-times" id='clear' title='Clear context' onclick='view.clearContext()'></span></td>
+                            <td style='width: 0px;'><span id='clear' title='Clear context' onclick='view.clearContext()'>x</span></td>
                             <td style='width: 20px;'><img src='$${serverURL}/images/right_arrow.png' id='go' title='Get recommendations for this context' onclick='view.updateContext()'></td>
                         </tr>
                     </table>

@@ -56,3 +56,7 @@ Support for python and javascript added.
 
 ### 1.0.1
  - Fixed rendering issue
+
+### 1.0.2
+ - Added interactive elements to suggested items (feedback, documentation, add/remove to/from context)
+
