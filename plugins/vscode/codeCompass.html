@@ -340,8 +340,8 @@
                                 $(`#action-github-${idx}`).bind('click', () => getInfo(`${suggest.info.github}`));
                             }
                             $(`#overlay-${idx}`).append(`<div id='action-so-${idx}' class='action-stackoverflow' title='StackOverflow'></div>`)
-                                                .append(`<div id='action-thumbsup-${idx}' class='action-thumbsup' title='This recommendation was helpful'><i class='far fa-thumbs-up'></i></div>`)
-                                                .append(`<div id='action-thumbsdown-${idx}' class='action-thumbsdown' title='This recommendation was NOT helpful'><i class='far fa-thumbs-down'></i></div>`);
+                                                .append(`<div id='action-thumbsup-${idx}' class='action-thumbsup' title='This recommendation was helpful'></div>`)
+                                                .append(`<div id='action-thumbsdown-${idx}' class='action-thumbsdown' title='This recommendation was NOT helpful'></div>`);
                             $(`#action-so-${idx}`).bind('click', () =>  getInfo(`${suggest.info.stackoverflow}`));
                             $(`#action-thumbsup-${idx}`).bind('click', () => thumbsUp(`${suggest.module}`));
                             $(`#action-thumbsdown-${idx}`).bind('click', () => thumbsDown(`${suggest.module}`));                                      
