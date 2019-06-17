@@ -2,7 +2,7 @@
     "name": "code-compass",
     "displayName": "Code-Compass (Nokia Bell-Labs)",
     "description": "Code Compass suggests libraries given your current development context",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "NokiaBellLabs",
     "repository": {
         "type": "github",
