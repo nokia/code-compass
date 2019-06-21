@@ -490,7 +490,7 @@ function parseJava(str) {
 
 function parseJavaScript(str) {
     setLanguage('js');
-    var regexs = [/require\(["']([^"']+)["']\)/gm, /import\s+{?((?!\s+from).+)}?\s+from\s+["']([^"']+)["']/gm];
+    var regexs = [/require\(["']([^"']+)["']\)/gm, /import ["']([^"']+)["']/gm, /import\s+{?(?!\s+from).+}?\s+from\s+["']([^"']+)["']/gm];
     const acceptedFirstCharacter = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
     let m: any;
     var imps : string[] = [];
