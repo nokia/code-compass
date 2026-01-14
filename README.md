@@ -1,6 +1,9 @@
 [![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/NokiaBellLabs.code-compass.svg)](https://marketplace.visualstudio.com/items?itemName=NokiaBellLabs.code-compass)
 
 
+# Code Compass is archived and no longer maintained
+
+
 [Code Compass](https://www.bell-labs.com/code-compass) is a contextual search engine for software packages developed at [Nokia Bell Labs](https://www.bell-labs.com). It supercharges code reuse by recommending the best possible software libraries for your specific software project. See for yourself:
 
 ![showcase](assets/showcase.gif)
